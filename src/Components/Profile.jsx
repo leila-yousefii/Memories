@@ -11,10 +11,11 @@ import { useAuth } from "./../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import logoutimg from "../../public/icons8-logout-50.png";
 import edit from "../../public/icons8-edit-64 .png";
+import profiledefault from "../../public/Download free image of Beige acrylic texture background wallpaper  by Adjima about beige texture, beige, abstract, beige wallpaper, and brown abstract backgrounds 2536720 (1).jpeg"
 const Profile = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
-  const [photoURL, setPhotoURL] = useState("");
+  const [photoURL, setPhotoURL] = useState(profiledefault);
   const types = ["image/png", "image/jpeg"];
   const auth = getAuth();
   const user = auth.currentUser;
