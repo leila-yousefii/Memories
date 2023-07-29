@@ -16,7 +16,6 @@ const Userpics = () => {
       where("currentuser", "==", currentUser.email),
       orderBy("createdAt", "desc")
     );
-    console.log(currentUser.email);
     const unsubscribe = onSnapshot(q, (snap) => {
       let documents = [];
       snap.forEach((doc) => {

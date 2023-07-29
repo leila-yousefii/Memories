@@ -1,10 +1,8 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from './../contexts/AuthContext';
 import { useRef, useState } from 'react';
 
 const ForgotPassword = () => {
-    const {login}=useAuth();
     const {resetPassword}=useAuth();
     const emailRef = useRef();
     // const passwordRef = useRef();
@@ -12,7 +10,6 @@ const ForgotPassword = () => {
     const [message, setMessage] = useState();
 
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
 
     async function handleSubmit(e) {
 
@@ -30,8 +27,6 @@ const ForgotPassword = () => {
         }
         setLoading(false);
       }
-
-
 
   return (
     <div>    <div className="background">

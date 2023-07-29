@@ -1,4 +1,3 @@
-import icons8 from "../../public/download.jpeg";
 import { storage } from "../firebase/config";
 import { getAuth } from "firebase/auth";
 import Userpics from "./Userpics";
@@ -8,7 +7,10 @@ import { uploadBytes } from "firebase/storage";
 import { getDownloadURL } from "firebase/storage";
 import { ref } from "firebase/storage";
 import { useEffect } from "react";
-
+import { useAuth } from "./../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
+import logoutimg from "../../public/icons8-logout-50.png";
+import edit from "../../public/icons8-edit-64 .png";
 const Profile = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(null);
@@ -16,6 +18,9 @@ const Profile = () => {
   const types = ["image/png", "image/jpeg"];
   const auth = getAuth();
   const user = auth.currentUser;
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
   const changeUserPic = (e) => {
     let selected = e.target.files[0];
     if (selected && types.includes(selected.type)) {
@@ -27,6 +32,17 @@ const Profile = () => {
       setError("please select an image file (png or jpg)");
     }
   };
+
+  async function handleLogout() {
+    setError("");
+
+    try {
+      await logout();
+      navigate("/login", { replace: true });
+    } catch {
+      setError("Failed to log out");
+    }
+  }
 
   async function upload(file, currentUser) {
     const fileRef = ref(storage, currentUser.uid + ".png");
@@ -48,14 +64,25 @@ const Profile = () => {
         <div className="w-full lg:w-7/12 px-4 mx-auto">
           <div className=" flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg mt-16">
             <div className="px-6">
-              <div className="  h-auto flex justify-center w-2/3 max-h-2/3 m-auto">
-                <div className="image-upload  ">
+              <img
+                src={logoutimg}
+                onClick={handleLogout}
+                className="mr-0 w-4 xs:w-3 sm:w-3 md:w-7 m-2"
+                role="button"
+              ></img>
+
+              <div className="  h-auto flex justify-center w-1/3 max-h-2/3 m-auto">
+                <div className="image-upload ">
                   <label htmlFor="file">
                     <img
+                      role="button"
                       alt="..."
                       src={photoURL}
-                      className="shadow-xl  h-auto self-center  border-none  mb-0 "
+                      className="shadow-xl  h-auto self-center  border-none  mb-0 profile-img"
                     ></img>
+                    <div className="middle">
+                      <img src={edit} className="middle-img w-28"></img>
+                    </div>
                   </label>
                   <input
                     type="file"
